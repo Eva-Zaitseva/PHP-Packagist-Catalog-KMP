@@ -1,4 +1,3 @@
-
 package com.example.packagist.presentation.catalog
 
 import androidx.compose.foundation.layout.Arrangement
@@ -16,22 +15,18 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.packagist.data.MockPackages
 import com.example.packagist.model.PhpPackage
 
 @Composable
 fun CatalogScreen(
+    uiState: CatalogUiState,
+    onSearchQueryChange: (String) -> Unit,
     onPackageClick: (PhpPackage) -> Unit
 ) {
-    var searchQuery by remember { mutableStateOf("") }
-
-    val filteredPackages = MockPackages.packages.filter { phpPackage ->
-        phpPackage.name.contains(searchQuery, ignoreCase = true) ||
-                phpPackage.description.contains(searchQuery, ignoreCase = true)
-    }
+    val filteredPackages = uiState.filteredPackages
 
     Column(
         modifier = Modifier
@@ -55,11 +50,15 @@ fun CatalogScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = searchQuery,
-            onValueChange = { searchQuery = it },
+            value = uiState.searchQuery,
+            onValueChange = onSearchQueryChange,
             modifier = Modifier.fillMaxWidth(),
-            label = { Text("Поиск пакетов") },
-            placeholder = { Text("Например, laravel") },
+            label = {
+                Text("Поиск пакетов")
+            },
+            placeholder = {
+                Text("Например, laravel")
+            },
             singleLine = true
         )
 
@@ -77,9 +76,14 @@ fun CatalogScreen(
             contentPadding = PaddingValues(bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            items(filteredPackages) { phpPackage ->
+            items(
+                items = filteredPackages,
+                key = { it.name }
+            ) { phpPackage ->
                 Card(
-                    onClick = { onPackageClick(phpPackage) },
+                    onClick = {
+                        onPackageClick(phpPackage)
+                    },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
