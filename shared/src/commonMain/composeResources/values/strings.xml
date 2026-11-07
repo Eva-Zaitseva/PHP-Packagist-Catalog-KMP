@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">PackagistCatalog</string>
+
+    <string name="catalog_title">Каталог PHP-пакетов</string>
+    <string name="search_packages">Поиск пакетов</string>
+    <string name="search_hint">Например, laravel</string>
+    <string name="package_count">Найдено пакетов: %1$d</string>
+
+    <string name="version">Версия: %1$s</string>
+    <string name="downloads">Загрузки: %1$s</string>
+    <string name="stars">Звёзды: %1$d</string>
+
+    <string name="catalog">Каталог</string>
+    <string name="favorites">Избранное</string>
+    <string name="empty_favorites">В избранном пока нет пакетов.</string>
+    <string name="add_favorite">Добавить в избранное</string>
+    <string name="remove_favorite">Убрать из избранного</string>
+
+    <string name="back_to_catalog">← Назад к каталогу</string>
+    <string name="package_information">Информация о пакете</string>
+    <string name="dependencies">Зависимости (require)</string>
+    <string name="no_dependencies">У этого пакета нет указанных зависимостей.</string>
+    <string name="open_package">Открыть пакет</string>
+    <string name="package_not_found">Нет в тестовом каталоге</string>
+
+    <string name="theme_setting">Тема</string>
+    <string name="theme_system">Системная</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="language_setting">Язык</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_english">Английский</string>
+</resources>

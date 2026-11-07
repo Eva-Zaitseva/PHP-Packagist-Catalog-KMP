@@ -20,4 +20,18 @@ class CatalogViewModel(
     fun onSearchQueryChange(query: String) {
         uiState = uiState.copy(searchQuery = query)
     }
+
+    fun onFavoriteClick(packageName: String) {
+        val favorites = uiState.favoritePackageNames.toMutableSet()
+
+        if (packageName in favorites) {
+            favorites.remove(packageName)
+        } else {
+            favorites.add(packageName)
+        }
+
+        uiState = uiState.copy(
+            favoritePackageNames = favorites
+        )
+    }
 }

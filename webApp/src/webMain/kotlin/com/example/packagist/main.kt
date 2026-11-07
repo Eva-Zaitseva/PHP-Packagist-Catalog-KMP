@@ -1,4 +1,3 @@
-
 package com.example.packagist
 
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -17,11 +16,13 @@ fun main() {
                 ChronologicalBrowserNavigation(
                     backStack = backStack,
 
-                    // Преобразуем маршрут приложения в URL.
                     saveKey = { route ->
                         when (route) {
                             PackageRoute.Catalog ->
                                 buildBrowserHistoryFragment("catalog")
+
+                            PackageRoute.Favorites ->
+                                buildBrowserHistoryFragment("favorites")
 
                             is PackageRoute.Details ->
                                 buildBrowserHistoryFragment(
@@ -33,11 +34,13 @@ fun main() {
                         }
                     },
 
-                    // Восстанавливаем маршрут из URL.
                     restoreKey = { fragment ->
                         when (getBrowserHistoryFragmentName(fragment)) {
                             "catalog" ->
                                 PackageRoute.Catalog
+
+                            "favorites" ->
+                                PackageRoute.Favorites
 
                             "details" -> {
                                 val parameters =

@@ -9,6 +9,11 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
 }
 
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.example.packagist.resources"
+}
+
 kotlin {
     js {
         browser()

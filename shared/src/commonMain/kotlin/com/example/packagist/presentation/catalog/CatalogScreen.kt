@@ -1,8 +1,9 @@
+
 package com.example.packagist.presentation.catalog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,22 +12,35 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.packagist.model.PhpPackage
+import com.example.packagist.presentation.components.PackageCard
+import com.example.packagist.resources.Res
+import com.example.packagist.resources.catalog_title
+import com.example.packagist.resources.favorites
+import com.example.packagist.resources.package_count
+import com.example.packagist.resources.search_hint
+import com.example.packagist.resources.search_packages
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun CatalogScreen(
     uiState: CatalogUiState,
     onSearchQueryChange: (String) -> Unit,
-    onPackageClick: (PhpPackage) -> Unit
+    onPackageClick: (com.example.packagist.model.PhpPackage) -> Unit,
+    onFavoriteClick: (String) -> Unit,
+    onFavoritesClick: () -> Unit
 ) {
     val filteredPackages = uiState.filteredPackages
+
+    // Сохраняем позицию прокрутки списка.
+    val listState = rememberLazyListState()
 
     Column(
         modifier = Modifier
@@ -34,18 +48,20 @@ fun CatalogScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(
-            text = "PackagistCatalog",
-            style = MaterialTheme.typography.headlineMedium
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = stringResource(Res.string.catalog_title),
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.weight(1f)
+            )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "Каталог PHP-пакетов",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.secondary
-        )
+            TextButton(onClick = onFavoritesClick) {
+                Text(stringResource(Res.string.favorites))
+            }
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -54,10 +70,10 @@ fun CatalogScreen(
             onValueChange = onSearchQueryChange,
             modifier = Modifier.fillMaxWidth(),
             label = {
-                Text("Поиск пакетов")
+                Text(stringResource(Res.string.search_packages))
             },
             placeholder = {
-                Text("Например, laravel")
+                Text(stringResource(Res.string.search_hint))
             },
             singleLine = true
         )
@@ -65,63 +81,34 @@ fun CatalogScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Найдено пакетов: ${filteredPackages.size}",
+            text = stringResource(
+                Res.string.package_count,
+                filteredPackages.size
+            ),
             style = MaterialTheme.typography.titleSmall
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyColumn(
+            state = listState,
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(
                 items = filteredPackages,
                 key = { it.name }
             ) { phpPackage ->
-                Card(
-                    onClick = {
+                PackageCard(
+                    phpPackage = phpPackage,
+                    isFavorite = uiState.isFavorite(phpPackage.name),
+                    onPackageClick = {
                         onPackageClick(phpPackage)
                     },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(
-                            text = phpPackage.name,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        Text(
-                            text = phpPackage.description,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Text(
-                            text = "Версия: ${phpPackage.version}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-
-                        Text(
-                            text = "Загрузки: ${phpPackage.downloads}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-
-                        Text(
-                            text = "Звёзды: ${phpPackage.stars}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
+                    onFavoriteClick = {
+                        onFavoriteClick(phpPackage.name)
                     }
-                }
+                )
             }
         }
     }

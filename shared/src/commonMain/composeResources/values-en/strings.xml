@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">PackagistCatalog</string>
+
+    <string name="catalog_title">PHP Packages Catalog</string>
+    <string name="search_packages">Search packages</string>
+    <string name="search_hint">For example, laravel</string>
+    <string name="package_count">Packages found: %1$d</string>
+
+    <string name="version">Version: %1$s</string>
+    <string name="downloads">Downloads: %1$s</string>
+    <string name="stars">Stars: %1$d</string>
+
+    <string name="catalog">Catalog</string>
+    <string name="favorites">Favorites</string>
+    <string name="empty_favorites">There are no favorite packages yet.</string>
+    <string name="add_favorite">Add to favorites</string>
+    <string name="remove_favorite">Remove from favorites</string>
+
+    <string name="back_to_catalog">← Back to catalog</string>
+    <string name="package_information">Package information</string>
+    <string name="dependencies">Dependencies (require)</string>
+    <string name="no_dependencies">This package has no listed dependencies.</string>
+    <string name="open_package">Open package</string>
+    <string name="package_not_found">Not in the test catalog</string>
+
+    <string name="theme_setting">Theme</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="language_setting">Language</string>
+    <string name="language_russian">Russian</string>
+    <string name="language_english">English</string>
+</resources>

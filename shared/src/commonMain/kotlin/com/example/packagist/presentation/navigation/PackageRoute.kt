@@ -9,6 +9,9 @@ sealed interface PackageRoute : NavKey {
     data object Catalog : PackageRoute
 
     @Serializable
+    data object Favorites : PackageRoute
+
+    @Serializable
     data class Details(
         val packageName: String
     ) : PackageRoute
