@@ -1,11 +1,58 @@
+
 package com.example.packagist
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
+import com.example.packagist.presentation.navigation.PackageRoute
+import com.github.terrakok.navigation3.browser.ChronologicalBrowserNavigation
+import com.github.terrakok.navigation3.browser.buildBrowserHistoryFragment
+import com.github.terrakok.navigation3.browser.getBrowserHistoryFragmentName
+import com.github.terrakok.navigation3.browser.getBrowserHistoryFragmentParameters
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     ComposeViewport {
-        App()
+        App(
+            browserHistory = { backStack ->
+                ChronologicalBrowserNavigation(
+                    backStack = backStack,
+
+                    // Преобразуем маршрут приложения в URL.
+                    saveKey = { route ->
+                        when (route) {
+                            PackageRoute.Catalog ->
+                                buildBrowserHistoryFragment("catalog")
+
+                            is PackageRoute.Details ->
+                                buildBrowserHistoryFragment(
+                                    "details",
+                                    mapOf(
+                                        "packageName" to route.packageName
+                                    )
+                                )
+                        }
+                    },
+
+                    // Восстанавливаем маршрут из URL.
+                    restoreKey = { fragment ->
+                        when (getBrowserHistoryFragmentName(fragment)) {
+                            "catalog" ->
+                                PackageRoute.Catalog
+
+                            "details" -> {
+                                val parameters =
+                                    getBrowserHistoryFragmentParameters(fragment)
+
+                                parameters["packageName"]?.let { packageName ->
+                                    PackageRoute.Details(packageName)
+                                }
+                            }
+
+                            else -> null
+                        }
+                    }
+                )
+            }
+        )
     }
 }

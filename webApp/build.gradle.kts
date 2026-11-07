@@ -1,3 +1,4 @@
+
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
@@ -19,10 +20,25 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(project(":shared"))
+        val commonMain by getting {
+            dependencies {
+                implementation(project(":shared"))
+                implementation(libs.compose.ui)
+            }
+        }
 
-            implementation(libs.compose.ui)
+        // Общий исходный набор для браузерной версии.
+        val webMain by creating {
+            dependsOn(commonMain)
+        }
+
+        // webMain используется JavaScript-версией.
+        val jsMain by getting {
+            dependsOn(webMain)
+
+            dependencies {
+                implementation("com.github.terrakok:navigation3-browser:1.1.0")
+            }
         }
     }
 }
