@@ -48,7 +48,8 @@ fun FavoritesScreen(
 
         Text(
             text = stringResource(Res.string.favorites),
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -56,7 +57,8 @@ fun FavoritesScreen(
         if (favoritePackages.isEmpty()) {
             Text(
                 text = stringResource(Res.string.empty_favorites),
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onBackground
             )
         } else {
             LazyColumn(

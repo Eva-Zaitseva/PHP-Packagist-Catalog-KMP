@@ -60,7 +60,8 @@ fun DetailScreen(
 
         Text(
             text = phpPackage.name,
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         TextButton(onClick = onFavoriteClick) {
@@ -79,7 +80,8 @@ fun DetailScreen(
 
         Text(
             text = phpPackage.description,
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -104,13 +106,15 @@ fun DetailScreen(
 
         Text(
             text = stringResource(Res.string.dependencies),
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         if (phpPackage.require.isEmpty()) {
-            Text(stringResource(Res.string.no_dependencies))
+            Text(stringResource(Res.string.no_dependencies),
+                color = MaterialTheme.colorScheme.onBackground)
         } else {
             phpPackage.require.forEach { (dependencyName, version) ->
                 Card(

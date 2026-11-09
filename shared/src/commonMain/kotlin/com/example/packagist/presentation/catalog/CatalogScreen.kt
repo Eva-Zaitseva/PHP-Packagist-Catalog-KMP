@@ -55,6 +55,7 @@ fun CatalogScreen(
             Text(
                 text = stringResource(Res.string.catalog_title),
                 style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.weight(1f)
             )
 
@@ -85,7 +86,8 @@ fun CatalogScreen(
                 Res.string.package_count,
                 filteredPackages.size
             ),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(modifier = Modifier.height(8.dp))
