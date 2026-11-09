@@ -1,37 +1,27 @@
-This is a Kotlin Multiplatform project targeting Android, Web.
+# PHP Packagist Catalog — KMP
 
-* [/shared](./shared/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./shared/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./shared/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./shared/src/jvmMain/kotlin)
-    folder is the appropriate location.
+Кроссплатформенное приложение (Compose Multiplatform): каталог пакетов PHP из [Packagist](https://packagist.org).
 
-### Running the apps
+**Предметная область:** каталог PHP-пакетов. Список пакетов с описанием, версией, количеством загрузок и звёзд; поиск по названию; избранное; экран детали пакета со списком зависимостей (`require`) и переходом по зависимостям в другой пакет.
 
-Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
+**Данные (В1):** моки — 23 записи в форме API Packagist (`packagist.org/search.json`: `name`, `description`, `version`, `downloads`, `stars`, `require`), чтобы в В2 заменить моки сетью без переписывания экранов.
 
-- Android app: `./gradlew :androidApp:assembleDebug`
-- Web app:
-  - Wasm target (faster, modern browsers): `./gradlew :webApp:wasmJsBrowserDevelopmentRun`
-  - JS target (slower, supports older browsers): `./gradlew :webApp:jsBrowserDevelopmentRun`
+## Структура
 
-### Running tests
+- `shared` — общий модуль: модель/репозиторий/моки (`domain`, `data`), экраны и ViewModel (`presentation`), тема из токенов (`presentation/theme`), строки `ru`/`en` в compose-ресурсах с переключением языка в рантайме.
+- `androidApp` — Android-приложение.
+- `webApp` — веб-приложение (JS и WasmJS), поддержана история браузера.
 
-Use the run button in your IDE's editor gutter, or run tests using Gradle tasks:
+## Запуск
 
-- Android tests: `./gradlew :shared:testAndroidHostTest`
-- Web tests:
-  - Wasm target: `./gradlew :shared:wasmJsTest`
-  - JS target: `./gradlew :shared:jsTest`
+- Android: `./gradlew :androidApp:assembleDebug`
+- Web (Wasm): `./gradlew :webApp:wasmJsBrowserDevelopmentRun`
+- Web (JS): `./gradlew :webApp:jsBrowserDevelopmentRun`
 
----
+## Тесты
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://kotlinlang.org/compose-multiplatform/),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+- `./gradlew :shared:testAndroidHostTest`
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+## Тема и язык
+
+Переключение светлой/тёмной/системной темы и языка RU/EN — кнопками в шапке приложения.
