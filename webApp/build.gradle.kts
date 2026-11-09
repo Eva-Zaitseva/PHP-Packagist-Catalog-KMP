@@ -32,8 +32,16 @@ kotlin {
             dependsOn(commonMain)
         }
 
-        // webMain используется JavaScript-версией.
+        // webMain используется JavaScript- и Wasm-версиями.
         val jsMain by getting {
+            dependsOn(webMain)
+
+            dependencies {
+                implementation("com.github.terrakok:navigation3-browser:1.1.0")
+            }
+        }
+
+        val wasmJsMain by getting {
             dependsOn(webMain)
 
             dependencies {
