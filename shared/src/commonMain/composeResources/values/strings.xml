@@ -6,6 +6,7 @@
     <string name="search_packages">Поиск пакетов</string>
     <string name="search_hint">Например, laravel</string>
     <string name="package_count">Найдено пакетов: %1$d</string>
+    <string name="nothing_found">Ничего не найдено</string>
 
     <string name="version">Версия: %1$s</string>
     <string name="downloads">Загрузки: %1$s</string>

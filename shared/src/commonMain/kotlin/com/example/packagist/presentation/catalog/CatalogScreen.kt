@@ -2,6 +2,7 @@
 package com.example.packagist.presentation.catalog
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,12 +19,14 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.packagist.presentation.components.PackageCard
 import com.example.packagist.resources.Res
 import com.example.packagist.resources.catalog_title
 import com.example.packagist.resources.favorites
+import com.example.packagist.resources.nothing_found
 import com.example.packagist.resources.package_count
 import com.example.packagist.resources.search_hint
 import com.example.packagist.resources.search_packages
@@ -92,25 +95,38 @@ fun CatalogScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        LazyColumn(
-            state = listState,
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            items(
-                items = filteredPackages,
-                key = { it.name }
-            ) { phpPackage ->
-                PackageCard(
-                    phpPackage = phpPackage,
-                    isFavorite = uiState.isFavorite(phpPackage.name),
-                    onPackageClick = {
-                        onPackageClick(phpPackage)
-                    },
-                    onFavoriteClick = {
-                        onFavoriteClick(phpPackage.name)
-                    }
+        if (filteredPackages.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(Res.string.nothing_found),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            }
+        } else {
+            LazyColumn(
+                state = listState,
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items(
+                    items = filteredPackages,
+                    key = { it.name }
+                ) { phpPackage ->
+                    PackageCard(
+                        phpPackage = phpPackage,
+                        isFavorite = uiState.isFavorite(phpPackage.name),
+                        onPackageClick = {
+                            onPackageClick(phpPackage)
+                        },
+                        onFavoriteClick = {
+                            onFavoriteClick(phpPackage.name)
+                        }
+                    )
+                }
             }
         }
     }
